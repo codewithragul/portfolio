@@ -239,7 +239,7 @@ a:hover .tooltip {
     transition: 1s;
 }
 
-.img-box.home-img:hover {
+.img-box.home-img:hover, .img-box.about-img:hover {
     box-shadow: 0 0 8rem var(--main-color);
 }
 
