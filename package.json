@@ -23,6 +23,7 @@
     "basic-auth": "^2.0.1",
     "body-parser": "^2.2.1",
     "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
     "express": "^5.2.1",
     "mongodb": "^7.0.0",
     "mongoose": "^9.0.1"
