@@ -1,130 +1,34 @@
-// server.js - Static portfolio + MongoDB API
 const express = require('express');
-const path = require('path');
-const cors = require('cors');
 const mongoose = require('mongoose');
+const path = require('path');
 require('dotenv').config();
 
 const app = express();
-app.use(cors());
 app.use(express.json());
 
-// =====================
-// MongoDB Connection
-// =====================
+// MongoDB
 mongoose
   .connect(process.env.MONGO_URI)
-  .then(() => console.log('✅ MongoDB Connected'))
+  .then(() => console.log('MongoDB connected'))
   .catch(err => {
-    console.error('❌ MongoDB connection failed', err);
-    process.exit(1);
+    console.error(err);
+    process.exit(1); // CRASH if DB fails (this causes 502)
   });
 
-// =====================
-// Message Schema
-// =====================
-const messageSchema = new mongoose.Schema({
-  fullName: { type: String, required: true, trim: true },
-  email: { type: String, required: true },
-  phone: String,
-  subject: String,
-  message: { type: String, required: true },
-  receivedAt: { type: Date, default: Date.now }
-});
+// Static files
+app.use(express.static(path.join(__dirname, 'public')));
 
-const Message = mongoose.model('Message', messageSchema);
-
-// =====================
-// Static Folder
-// =====================
-const PUBLIC_DIR = path.join(__dirname, 'public');
-app.use(express.static(PUBLIC_DIR));
-
-// Root route
 app.get('/', (req, res) => {
-  res.sendFile(path.join(PUBLIC_DIR, 'index.html'));
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-// =====================
-// API Routes
-// =====================
-
-// Save message
+// API
 app.post('/api/messages', async (req, res) => {
-  try {
-    const { fullName, email, phone, subject, message } = req.body;
-
-    if (!fullName || !email || !message) {
-      return res.status(400).json({
-        error: 'Missing required fields: fullName, email, message'
-      });
-    }
-
-    await Message.create({ fullName, email, phone, subject, message });
-    console.log('📩 Message saved from:', email);
-
-    res.status(201).json({ ok: true });
-  } catch (err) {
-    console.error('❌ Failed to save message:', err);
-    res.status(500).json({ error: 'Internal server error' });
-  }
-});
-
-// Admin: get all messages (optional)
-app.get('/api/messages', async (req, res) => {
-  try {
-    const messages = await Message.find().sort({ receivedAt: -1 });
-    res.json(messages);
-  } catch (err) {
-    res.status(500).json({ error: 'Failed to fetch messages' });
-  }
-});
-
-// Health check
-app.get('/_status', (req, res) => {
   res.json({ ok: true });
 });
 
-// =====================
-// Server
-// =====================
+// ⚠️ MUST USE process.env.PORT
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`🚀 Server running on port ${PORT}`);
+  console.log(`Server running on port ${PORT}`);
 });
-
-
-// const express = require('express');
-// const mongoose = require('mongoose');
-// const cors = require('cors');
-
-// const app = express();
-
-// app.use(cors());
-// app.use(express.json());
-
-// // TEST ROUTE
-// app.get('/api/health', (req, res) => {
-//   res.json({ status: 'ok' });
-// });
-
-// // CONTACT ROUTE
-// app.post('/api/messages', async (req, res) => {
-//   try {
-//     const msg = await Message.create(req.body);
-//     res.status(201).json(msg);
-//   } catch (err) {
-//     res.status(500).json({ error: 'Failed to save message' });
-//   }
-// });
-
-// mongoose.connect(process.env.MONGO_URI)
-//   .then(() => {
-//     console.log('MongoDB connected');
-//     const PORT = process.env.PORT || 3000;
-//     app.listen(PORT, () => console.log('Server running on', PORT));
-//   })
-//   .catch(err => {
-//     console.error('MongoDB error:', err);
-//     process.exit(1); // THIS causes deploy fail if URI is wrong
-//   });
