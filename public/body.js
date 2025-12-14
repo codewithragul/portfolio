@@ -155,7 +155,7 @@ projectLists.forEach((list, idx) => {
 /* ========================= CONTACT FORM (FIXED & PROD SAFE) ======================= */
 /* ========================= CONTACT FORM (FINAL FIX) ======================= */
 (function () {
-  const ENDPOINT = "https://ragul17-portfolio.onrender.com/api/messages";
+const ENDPOINT = `${window.location.origin}/api/messages`;
   const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
   function initContact() {
