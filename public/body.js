@@ -198,7 +198,7 @@ const ENDPOINT = `${window.location.origin}/api/messages`;
 
         if (!res.ok) throw new Error("Server error");
 
-        showPopup("success", "Message Sent", "Saved successfully!","I Will Reply Soon 😎");
+        showPopup("success", "Message Sent", "I Will Reply Soon 😎", "Saved successfully!");
         form.reset();
       } catch (err) {
         showPopup("warning", "Network Error", "Server not reachable.");
