@@ -92,3 +92,39 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);
 });
+
+
+// const express = require('express');
+// const mongoose = require('mongoose');
+// const cors = require('cors');
+
+// const app = express();
+
+// app.use(cors());
+// app.use(express.json());
+
+// // TEST ROUTE
+// app.get('/api/health', (req, res) => {
+//   res.json({ status: 'ok' });
+// });
+
+// // CONTACT ROUTE
+// app.post('/api/messages', async (req, res) => {
+//   try {
+//     const msg = await Message.create(req.body);
+//     res.status(201).json(msg);
+//   } catch (err) {
+//     res.status(500).json({ error: 'Failed to save message' });
+//   }
+// });
+
+// mongoose.connect(process.env.MONGO_URI)
+//   .then(() => {
+//     console.log('MongoDB connected');
+//     const PORT = process.env.PORT || 3000;
+//     app.listen(PORT, () => console.log('Server running on', PORT));
+//   })
+//   .catch(err => {
+//     console.error('MongoDB error:', err);
+//     process.exit(1); // THIS causes deploy fail if URI is wrong
+//   });

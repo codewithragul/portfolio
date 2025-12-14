@@ -153,15 +153,9 @@ projectLists.forEach((list, idx) => {
 
 
 /* ========================= CONTACT FORM (FIXED & PROD SAFE) ======================= */
+/* ========================= CONTACT FORM (FINAL FIX) ======================= */
 (function () {
-  const ENDPOINT =
-    location.hostname === 'localhost'
-      ? 'http://localhost:3000/api/messages'
-      : 'https://ragul17-portfolio.onrender.com/api/messages';
-
-  console.log('[contact] hostname =', location.hostname);
-  console.log('[contact] endpoint =', ENDPOINT);
-
+  const ENDPOINT = "https://ragul17-portfolio.onrender.com/api/messages";
   const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
   function initContact() {
@@ -183,15 +177,16 @@ projectLists.forEach((list, idx) => {
         message: form.message.value.trim(),
       };
 
-      // Validation
       if (!payload.fullName || !payload.email || !payload.message) {
-        showPopup("error", "Missing Fields", "Please fill all required fields.", "OK");
-        return resetBtn();
+        showPopup("error", "Missing Fields", "Please fill all required fields.");
+        resetBtn();
+        return;
       }
 
       if (!emailPattern.test(payload.email)) {
-        showPopup("error", "Invalid Email", "Enter a valid email address.", "OK");
-        return resetBtn();
+        showPopup("error", "Invalid Email", "Enter a valid email.");
+        resetBtn();
+        return;
       }
 
       try {
@@ -201,21 +196,12 @@ projectLists.forEach((list, idx) => {
           body: JSON.stringify(payload),
         });
 
-        if (!res.ok) {
-          const txt = await res.text();
-          throw new Error(txt || 'Server error');
-        }
+        if (!res.ok) throw new Error("Server error");
 
-        showPopup("success", "Message Sent", "Your message was sent successfully!", "CLOSE");
+        showPopup("success", "Message Sent", "Saved successfully!");
         form.reset();
       } catch (err) {
-        console.error('[contact] error:', err);
-        showPopup(
-          "warning",
-          "Network Error",
-          "Server is unreachable right now. Please try again in a moment.",
-          "OK"
-        );
+        showPopup("warning", "Network Error", "Server not reachable.");
       } finally {
         resetBtn();
       }
@@ -227,9 +213,7 @@ projectLists.forEach((list, idx) => {
     });
   }
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initContact);
-  } else {
-    initContact();
-  }
+  document.readyState === 'loading'
+    ? document.addEventListener('DOMContentLoaded', initContact)
+    : initContact();
 })();
