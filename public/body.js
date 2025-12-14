@@ -149,92 +149,87 @@ projectLists.forEach((list, idx) => {
 })();
 
 /* ========================= DEBUG CONTACT FORM + SUBMIT HANDLER ======================= */
-(function () {
-  // For debugging, use absolute endpoint so origin issues are gone.
-  const ENDPOINT = 'http://localhost:3000/api/messages';
-  const emailPattern = /^[A-Za-z0-9]+@[A-Za-z0-9]+\.[A-Za-z]{2,}$/;
 
-  console.log('[debug] page loaded. endpoint=', ENDPOINT);
+
+
+/* ========================= CONTACT FORM (FIXED & PROD SAFE) ======================= */
+(function () {
+  const ENDPOINT =
+    location.hostname === 'localhost'
+      ? 'http://localhost:3000/api/messages'
+      : 'https://ragul17-portfolio.onrender.com/api/messages';
+
+  console.log('[contact] hostname =', location.hostname);
+  console.log('[contact] endpoint =', ENDPOINT);
+
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
   function initContact() {
     const form = document.querySelector('.contact-form');
-    if (!form) { console.warn('[debug] contact form not found'); return; }
+    if (!form) return;
 
-    const submitBtn = form.querySelector('button[type="submit"], button[id="contact-submit-btn"], .btn');
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
 
-    // Remove old submit handlers (defensive)
-    form.onsubmit = null;
+      const submitBtn = form.querySelector('button[type="submit"]');
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Sending...';
 
-    // Use click handler to avoid native form navigation from other tools/servers
-    submitBtn.addEventListener('click', async (ev) => {
-      ev.preventDefault();
-      console.log('[debug] submit event fired via click, preventing default and starting send');
+      const payload = {
+        fullName: form.fullname.value.trim(),
+        email: form.email.value.trim(),
+        phone: form.phone.value.trim(),
+        subject: form.subject.value.trim(),
+        message: form.message.value.trim(),
+      };
 
-      // disable button
-      if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Sending...'; }
-
-      const fullName = (form.querySelector('[name=fullname]')?.value || '').trim();
-      const email = (form.querySelector('[name=email]')?.value || '').trim();
-      const phone = (form.querySelector('[name=phone]')?.value || '').trim();
-      const subject = (form.querySelector('[name=subject]')?.value || '').trim();
-      const message = (form.querySelector('[name=message]')?.value || '').trim();
-
-      console.log('[debug] values', { fullName, email, phone, subject, message });
-
-      // VALIDATION
-      if (!fullName || !email || !message) {
-        console.warn('[debug] validation fail: missing fields');
-        showPopup("error", "Missing Fields", "Please enter your name, email and message.", "TRY AGAIN");
-        // keep contact active
-        sections.forEach(s => s.classList.remove('active')); if (sections[4]) sections[4].classList.add('active');
-        if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = 'Send Message'; }
-        return;
-      }
-      if (!emailPattern.test(email)) {
-        console.warn('[debug] validation fail: invalid email');
-        showPopup("error", "Invalid Email", "Please enter a valid email like user123@example.com", "TRY AGAIN");
-        sections.forEach(s => s.classList.remove('active')); if (sections[4]) sections[4].classList.add('active');
-        if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = 'Send Message'; }
-        return;
+      // Validation
+      if (!payload.fullName || !payload.email || !payload.message) {
+        showPopup("error", "Missing Fields", "Please fill all required fields.", "OK");
+        return resetBtn();
       }
 
-      const payload = { fullName, email, phone, subject, message, submittedAt: new Date().toISOString(), page: location.href };
-      console.log('[debug] sending payload to', ENDPOINT, payload);
+      if (!emailPattern.test(payload.email)) {
+        showPopup("error", "Invalid Email", "Enter a valid email address.", "OK");
+        return resetBtn();
+      }
 
       try {
-        const resp = await fetch(ENDPOINT, {
+        const res = await fetch(ENDPOINT, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload),
-          credentials: 'same-origin'
         });
 
-        console.log('[debug] fetch completed, status=', resp.status);
-        const text = await resp.text();
-        console.log('[debug] response text:', text);
-        let json = null;
-        try { json = JSON.parse(text); } catch (e) { /* not JSON */ }
-
-        if (resp.ok) {
-          console.log('[debug] server ok -> showing success popup');
-          showPopup("success", "Message Sent", "Your message was saved successfully!", "CLOSE");
-          form.reset();
-          sections.forEach(s => s.classList.remove('active')); if (sections[4]) sections[4].classList.add('active');
-        } else {
-          console.warn('[debug] server responded with error', resp.status, json || text);
-          const serverMsg = (json && json.error) ? json.error : (text || `Status ${resp.status}`);
-          showPopup("error", "Server Error", serverMsg, "TRY AGAIN");
-          sections.forEach(s => s.classList.remove('active')); if (sections[4]) sections[4].classList.add('active');
+        if (!res.ok) {
+          const txt = await res.text();
+          throw new Error(txt || 'Server error');
         }
+
+        showPopup("success", "Message Sent", "Your message was sent successfully!", "CLOSE");
+        form.reset();
       } catch (err) {
-        console.error('[debug] fetch threw', err);
-        showPopup("warning", "Network Issue", "Could not reach server. Make sure http://localhost:3000 is running.", "OK");
-        sections.forEach(s => s.classList.remove('active')); if (sections[4]) sections[4].classList.add('active');
+        console.error('[contact] error:', err);
+        showPopup(
+          "warning",
+          "Network Error",
+          "Server is unreachable right now. Please try again in a moment.",
+          "OK"
+        );
       } finally {
-        if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = 'Send Message'; }
+        resetBtn();
+      }
+
+      function resetBtn() {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Send Message';
       }
     });
   }
 
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initContact);
-  else initContact();
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initContact);
+  } else {
+    initContact();
+  }
 })();

@@ -1,78 +1,94 @@
-// server.js - explicit static server + API
+// server.js - Static portfolio + MongoDB API
 const express = require('express');
-const fs = require('fs');
 const path = require('path');
-const bodyParser = require('body-parser');
-const basicAuth = require('basic-auth');
 const cors = require('cors');
+const mongoose = require('mongoose');
+require('dotenv').config();
 
 const app = express();
 app.use(cors());
-app.use(bodyParser.json());
+app.use(express.json());
 
-// === static folder ===
-// PUBLIC_DIR is where index.html & body.js must live
+// =====================
+// MongoDB Connection
+// =====================
+mongoose
+  .connect(process.env.MONGO_URI)
+  .then(() => console.log('✅ MongoDB Connected'))
+  .catch(err => {
+    console.error('❌ MongoDB connection failed', err);
+    process.exit(1);
+  });
+
+// =====================
+// Message Schema
+// =====================
+const messageSchema = new mongoose.Schema({
+  fullName: { type: String, required: true, trim: true },
+  email: { type: String, required: true },
+  phone: String,
+  subject: String,
+  message: { type: String, required: true },
+  receivedAt: { type: Date, default: Date.now }
+});
+
+const Message = mongoose.model('Message', messageSchema);
+
+// =====================
+// Static Folder
+// =====================
 const PUBLIC_DIR = path.join(__dirname, 'public');
-console.log('Server starting. Project folder:', __dirname);
-console.log('Expecting public folder at:', PUBLIC_DIR);
-
-// Ensure public exists
-if (!fs.existsSync(PUBLIC_DIR)) {
-  console.error('ERROR: public folder not found at', PUBLIC_DIR);
-  console.error('Create a folder named "public" next to server.js and put index.html inside it.');
-  process.exit(1);
-}
-
-// Serve static assets
 app.use(express.static(PUBLIC_DIR));
 
-// Explicit root route that sends index.html (this guarantees GET / works)
+// Root route
 app.get('/', (req, res) => {
-  const indexFile = path.join(PUBLIC_DIR, 'index.html');
-  if (!fs.existsSync(indexFile)) {
-    return res.status(500).send('Error: index.html not found in public/');
-  }
-  res.sendFile(indexFile);
+  res.sendFile(path.join(PUBLIC_DIR, 'index.html'));
 });
 
-// Data file
-const DATA_FILE = path.join(__dirname, 'messages.json');
-const ADMIN_TOKEN = process.env.ADMIN_TOKEN || 'changeme-token';
+// =====================
+// API Routes
+// =====================
 
-// Ensure messages.json exists
-if (!fs.existsSync(DATA_FILE)) fs.writeFileSync(DATA_FILE, '[]', 'utf8');
-
-// Helpers
-function readMessages() {
-  return JSON.parse(fs.readFileSync(DATA_FILE, 'utf8') || '[]');
-}
-function writeMessages(arr) {
-  fs.writeFileSync(DATA_FILE, JSON.stringify(arr, null, 2), 'utf8');
-}
-
-// POST endpoint
-app.post('/api/messages', (req, res) => {
+// Save message
+app.post('/api/messages', async (req, res) => {
   try {
-    const data = req.body;
-    if (!data || !data.fullName || !data.email || !data.message) {
-      return res.status(400).json({ error: 'missing required fields: fullName, email, message' });
+    const { fullName, email, phone, subject, message } = req.body;
+
+    if (!fullName || !email || !message) {
+      return res.status(400).json({
+        error: 'Missing required fields: fullName, email, message'
+      });
     }
-    const messages = readMessages();
-    const entry = Object.assign({}, data, { receivedAt: new Date().toISOString() });
-    messages.push(entry);
-    writeMessages(messages);
-    console.log('Saved message from', data.email);
-    return res.status(201).json({ ok: true });
+
+    await Message.create({ fullName, email, phone, subject, message });
+    console.log('📩 Message saved from:', email);
+
+    res.status(201).json({ ok: true });
   } catch (err) {
-    console.error('Failed to save message', err);
-    return res.status(500).json({ error: 'internal server error' });
+    console.error('❌ Failed to save message:', err);
+    res.status(500).json({ error: 'Internal server error' });
   }
 });
 
-// small admin check route for quick health
-app.get('/_status', (req, res) => {
-  res.json({ ok: true, publicExists: fs.existsSync(PUBLIC_DIR) });
+// Admin: get all messages (optional)
+app.get('/api/messages', async (req, res) => {
+  try {
+    const messages = await Message.find().sort({ receivedAt: -1 });
+    res.json(messages);
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to fetch messages' });
+  }
 });
 
+// Health check
+app.get('/_status', (req, res) => {
+  res.json({ ok: true });
+});
+
+// =====================
+// Server
+// =====================
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`Server listening on ${PORT} — admin token: ${ADMIN_TOKEN}`));
+app.listen(PORT, () => {
+  console.log(`🚀 Server running on port ${PORT}`);
+});
