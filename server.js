@@ -20,7 +20,7 @@ mongoose
     process.exit(1);
   });
 
-/* ===== API ROUTE ===== */
+/* ===== API ROUTES FIRST ===== */
 app.post('/api/contact', async (req, res) => {
   try {
     const { fullName, email, phone, subject, message } = req.body;
@@ -40,6 +40,14 @@ app.post('/api/contact', async (req, res) => {
     console.error(err);
     res.status(500).json({ success: false, error: 'Server error' });
   }
+});
+
+/* ===== STATIC FRONTEND ===== */
+app.use(express.static(path.join(__dirname, 'public')));
+
+/* ===== FALLBACK (LAST) ===== */
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 /* ===== STATIC FRONTEND ===== */
