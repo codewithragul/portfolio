@@ -67,20 +67,9 @@ p {
     box-shadow: 0 0 1rem var(--main-color);
     transition: .3s;
 }
-/* .head::after {
-    content: '';
-    position: absolute;
-    left: 50%;
-    bottom: -1rem;
-    transform: translateX(-50%);
-    width: 10rem;
-    height: .3rem;
-    background: var(--main-color);
-    border-radius: .2rem;
-} */
+
 .head:hover {
     color: var(--main-color);
-    /* background: var(--white-color); */
     background: transparent;
     text-shadow: 0 0 2rem var(--white-color);
     transition: .3s;

@@ -7,11 +7,9 @@ const Message = require('./models/Message');
 
 const app = express();
 
-/* ===== MIDDLEWARE ===== */
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-/* ===== MONGODB ===== */
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => console.log('MongoDB connected'))
@@ -20,7 +18,6 @@ mongoose
     process.exit(1);
   });
 
-/* ===== API ROUTES FIRST ===== */
 app.post('/api/contact', async (req, res) => {
   try {
     const { fullName, email, phone, subject, message } = req.body;
@@ -42,23 +39,18 @@ app.post('/api/contact', async (req, res) => {
   }
 });
 
-/* ===== STATIC FRONTEND ===== */
 app.use(express.static(path.join(__dirname, 'public')));
 
-/* ===== FALLBACK (LAST) ===== */
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-/* ===== STATIC FRONTEND ===== */
 app.use(express.static(path.join(__dirname, 'public')));
 
-/* ===== FALLBACK ===== */
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-/* ===== PORT ===== */
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
