@@ -1,24 +1,67 @@
-/* ========================= NAV ======================= */
+
+
+
+
+/* ========================= NAV / UI CODE (updated) ======================= */
 const navs = document.querySelectorAll('.nav-list li');
 const cube = document.querySelector('.box');
 const sections = document.querySelectorAll('.section');
 
-window.popupOpen = false;
+const resumeList = document.querySelectorAll('.resume-list');
+const resumeBoxs = document.querySelectorAll('.resume-box');
+
+const projectLists = document.querySelectorAll('.project-list');
+const projectBoxs = document.querySelectorAll('.project-box');
 
 navs.forEach((nav, idx) => {
   nav.addEventListener('click', () => {
+    // Prevent navigation while a popup is open
     if (window.popupOpen) return;
 
-    document.querySelector('.nav-list li.active')?.classList.remove('active');
+    const activeNav = document.querySelector('.nav-list li.active');
+    if (activeNav) activeNav.classList.remove('active');
     nav.classList.add('active');
 
     if (cube) cube.style.transform = `rotateY(${idx * -90}deg)`;
 
-    document.querySelector('.section.active')?.classList.remove('active');
-    sections[idx]?.classList.add('active');
+    const activeSection = document.querySelector('.section.active');
+    if (activeSection) activeSection.classList.remove('active');
+    if (sections[idx]) sections[idx].classList.add('active');
+
+    const array = Array.from(sections);
+    const arrSecs = array.slice(1, -1);
+    arrSecs.forEach(s => {
+      if (s.classList.contains('active')) {
+        if (sections[4]) sections[4].classList.add('action-contact');
+      }
+    });
+    if (sections[0] && sections[0].classList.contains('active')) {
+      if (sections[4]) sections[4].classList.remove('action-contact');
+    }
   });
 });
 
+resumeList.forEach((list, idx) => {
+  list.addEventListener('click', () => {
+    const cur = document.querySelector('.resume-list.active');
+    if (cur) cur.classList.remove('active');
+    list.classList.add('active');
+    const curBox = document.querySelector('.resume-box.active');
+    if (curBox) curBox.classList.remove('active');
+    if (resumeBoxs[idx]) resumeBoxs[idx].classList.add('active');
+  });
+});
+
+projectLists.forEach((list, idx) => {
+  list.addEventListener('click', () => {
+    const cur = document.querySelector('.project-list.active');
+    if (cur) cur.classList.remove('active');
+    list.classList.add('active');
+    const curBox = document.querySelector('.project-box.active');
+    if (curBox) curBox.classList.remove('active');
+    if (projectBoxs[idx]) projectBoxs[idx].classList.add('active');
+  });
+});
 
 /* ========================= POPUP SYSTEM ======================= */
 /* ========================= POPUP SYSTEM ======================= */
