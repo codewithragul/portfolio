@@ -683,6 +683,29 @@ a:hover .tooltip {
 .contact-form .contact-btn .btn {
     cursor: pointer;
 }
+.cg-popup{
+  background:#fff;
+  border-radius:16px;
+  padding:24px;
+  width:360px;
+  text-align:center;
+  transform:scale(.9);
+  transition:.3s;
+
+  /* ✅ ADD THESE */
+  color:#222;
+}
+
+.cg-popup h2{
+  color:#111;
+  margin:8px 0;
+}
+
+.cg-popup p{
+  color:#444;
+  margin:4px 0;
+}
+
 
 
 
