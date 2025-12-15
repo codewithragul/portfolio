@@ -75,7 +75,7 @@ navs.forEach((nav, idx) => {
 /* ========================= CONTACT FORM (FINAL WORKING) ======================= */
 /* ========================= CONTACT FORM (FINAL – WORKING) ======================= */
 (function () {
-  const ENDPOINT = `${window.location.origin}/api/contact`;
+const ENDPOINT = `${window.location.origin}/api/contact`;
   const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
   function initContact() {
