@@ -51,6 +51,43 @@ body {
 p {
     font-size: 1.6rem;
 }
+.head{
+    position: absolute;
+    top: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 4rem;
+    color: var(--bg-color);
+    font-weight: 500;
+    letter-spacing: .1rem;
+    background: var(--main-color);
+    padding: 0 1rem;
+    border-radius: 3rem;
+    border-radius: .5rem;
+    box-shadow: 0 0 1rem var(--main-color);
+    transition: .3s;
+}
+/* .head::after {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: -1rem;
+    transform: translateX(-50%);
+    width: 10rem;
+    height: .3rem;
+    background: var(--main-color);
+    border-radius: .2rem;
+} */
+.head:hover {
+    color: var(--main-color);
+    /* background: var(--white-color); */
+    background: transparent;
+    text-shadow: 0 0 2rem var(--white-color);
+    transition: .3s;
+    
+    
+}
+
 
 .nav {
     position: fixed;
