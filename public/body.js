@@ -1,161 +1,81 @@
-
-
-
-
-/* ========================= NAV / UI CODE (updated) ======================= */
+/* ========================= NAV / UI CODE ======================= */
 const navs = document.querySelectorAll('.nav-list li');
 const cube = document.querySelector('.box');
 const sections = document.querySelectorAll('.section');
 
-const resumeList = document.querySelectorAll('.resume-list');
-const resumeBoxs = document.querySelectorAll('.resume-box');
-
-const projectLists = document.querySelectorAll('.project-list');
-const projectBoxs = document.querySelectorAll('.project-box');
-
 navs.forEach((nav, idx) => {
   nav.addEventListener('click', () => {
-    // Prevent navigation while a popup is open
     if (window.popupOpen) return;
 
-    const activeNav = document.querySelector('.nav-list li.active');
-    if (activeNav) activeNav.classList.remove('active');
+    document.querySelector('.nav-list li.active')?.classList.remove('active');
     nav.classList.add('active');
 
-    if (cube) cube.style.transform = `rotateY(${idx * -90}deg)`;
+    cube && (cube.style.transform = `rotateY(${idx * -90}deg)`);
 
-    const activeSection = document.querySelector('.section.active');
-    if (activeSection) activeSection.classList.remove('active');
-    if (sections[idx]) sections[idx].classList.add('active');
-
-    const array = Array.from(sections);
-    const arrSecs = array.slice(1, -1);
-    arrSecs.forEach(s => {
-      if (s.classList.contains('active')) {
-        if (sections[4]) sections[4].classList.add('action-contact');
-      }
-    });
-    if (sections[0] && sections[0].classList.contains('active')) {
-      if (sections[4]) sections[4].classList.remove('action-contact');
-    }
+    document.querySelector('.section.active')?.classList.remove('active');
+    sections[idx]?.classList.add('active');
   });
 });
 
-resumeList.forEach((list, idx) => {
-  list.addEventListener('click', () => {
-    const cur = document.querySelector('.resume-list.active');
-    if (cur) cur.classList.remove('active');
-    list.classList.add('active');
-    const curBox = document.querySelector('.resume-box.active');
-    if (curBox) curBox.classList.remove('active');
-    if (resumeBoxs[idx]) resumeBoxs[idx].classList.add('active');
-  });
-});
-
-projectLists.forEach((list, idx) => {
-  list.addEventListener('click', () => {
-    const cur = document.querySelector('.project-list.active');
-    if (cur) cur.classList.remove('active');
-    list.classList.add('active');
-    const curBox = document.querySelector('.project-box.active');
-    if (curBox) curBox.classList.remove('active');
-    if (projectBoxs[idx]) projectBoxs[idx].classList.add('active');
-  });
-});
-
-
+/* ========================= POPUP SYSTEM ======================= */
 (function () {
   const css = `
-  .cg-popup-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.45); display:flex; align-items:center; justify-content:center; visibility:hidden; opacity:0; transition:opacity .25s ease; z-index:99999; }
-  .cg-popup-overlay.show { visibility:visible; opacity:1; }
-  .cg-popup { width:360px; background:#fff; border-radius:18px; text-align:center; padding:26px; box-shadow:0 12px 35px rgba(0,0,0,0.16); transform:scale(.85); opacity:0; transition:all .3s ease; position:relative; }
-  .cg-popup-overlay.show .cg-popup { transform:scale(1); opacity:1; }
-  .cg-popup-close { position:absolute; top:12px; right:14px; font-size:20px; cursor:pointer; color:#666; }
-  .cg-icon { font-size:40px; width:84px; height:84px; border-radius:50%; margin:0 auto 12px; display:flex; align-items:center; justify-content:center; }
-  .cg-success .cg-icon { background:#e6f9ef; color:#0ba25a; }
-  .cg-error .cg-icon { background:#ffecec; color:#d64545; }
-  .cg-warning .cg-icon { background:#fff7e6; color:#c97f00; }
-  .cg-popup h2 { margin:6px 0 6px; font-size:20px; color:#222; }
-  .cg-popup p { margin:0; color:#555; font-size:14px; line-height:1.4; }
-  .cg-btn { margin-top:16px; padding:10px 22px; border-radius:10px; border:0; font-weight:700; cursor:pointer; color:#fff; background:linear-gradient(90deg,#00c37a,#00a6ff); }
-  .cg-error .cg-btn { background:linear-gradient(90deg,#ff6b6b,#ff3d3d); }
-  .cg-warning .cg-btn { background:linear-gradient(90deg,#f4b400,#ffbf33); color:#5a3800; }
+    .cg-popup-overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);
+    display:flex;align-items:center;justify-content:center;opacity:0;
+    visibility:hidden;transition:.3s;z-index:9999}
+    .cg-popup-overlay.show{opacity:1;visibility:visible}
+    .cg-popup{background:#fff;border-radius:16px;padding:24px;
+    width:360px;text-align:center;transform:scale(.9);transition:.3s}
+    .cg-popup-overlay.show .cg-popup{transform:scale(1)}
+    .cg-icon{font-size:42px;margin-bottom:10px}
+    .cg-success .cg-icon{color:#0ba25a}
+    .cg-error .cg-icon{color:#e74c3c}
+    .cg-warning .cg-icon{color:#f39c12}
+    .cg-btn{margin-top:16px;padding:10px 22px;border:none;
+    border-radius:10px;font-weight:700;color:#fff;cursor:pointer}
+    .cg-success .cg-btn{background:#0ba25a}
+    .cg-error .cg-btn{background:#e74c3c}
+    .cg-warning .cg-btn{background:#f39c12}
   `;
-  const style = document.createElement("style");
-  style.textContent = css;
-  document.head.appendChild(style);
+  document.head.insertAdjacentHTML("beforeend", `<style>${css}</style>`);
 
   const html = `
-    <div class="cg-popup-overlay" id="cg-popup-overlay" aria-hidden="true">
-      <div class="cg-popup" id="cg-popup">
-        <div class="cg-popup-close" id="cg-popup-close">&times;</div>
-        <div class="cg-icon" id="cg-popup-icon">✔</div>
-        <h2 id="cg-popup-title">Title</h2>
-        <p id="cg-popup-message">Message goes here.</p>
-        <button class="cg-btn" id="cg-popup-btn">OK</button>
+    <div class="cg-popup-overlay" id="popup">
+      <div class="cg-popup">
+        <div class="cg-icon" id="icon">✔</div>
+        <h2 id="title"></h2>
+        <p id="msg"></p>
+        <button class="cg-btn" id="btn">OK</button>
       </div>
     </div>`;
   document.body.insertAdjacentHTML("beforeend", html);
 
-  const overlay = document.getElementById("cg-popup-overlay");
-  const icon = document.getElementById("cg-popup-icon");
-  const title = document.getElementById("cg-popup-title");
-  const msg = document.getElementById("cg-popup-message");
-  const btn = document.getElementById("cg-popup-btn");
-  const close = document.getElementById("cg-popup-close");
+  const popup = document.getElementById("popup");
+  const icon = document.getElementById("icon");
+  const title = document.getElementById("title");
+  const msg = document.getElementById("msg");
+  const btn = document.getElementById("btn");
 
-  // global flag to indicate popup visibility
   window.popupOpen = false;
 
-  // Expose global showPopup(type, title, message, buttonText)
-  window.showPopup = function (type = "success", t = "", m = "", btnText = "OK") {
-    // Ensure contact remains active while popup shown
-    if (sections && sections[4]) {
-      sections.forEach(s => s.classList.remove('active'));
-      sections[4].classList.add('active');
-    }
-
-    overlay.classList.remove("cg-success", "cg-error", "cg-warning");
-    overlay.classList.add("cg-" + (type || "success"));
-    icon.innerHTML = type === "success" ? "✔" : type === "error" ? "✖" : "⚠";
+  window.showPopup = (type, t, m) => {
+    popup.className = `cg-popup-overlay show cg-${type}`;
+    icon.textContent = type === "success" ? "✔" : type === "error" ? "✖" : "⚠";
     title.textContent = t;
     msg.textContent = m;
-    btn.textContent = btnText || "OK";
-    overlay.setAttribute('aria-hidden', 'false');
-
-    // set popup-open flag and show
-    window.popupOpen = true;
-    overlay.classList.add("show");
+    popupOpen = true;
   };
 
-  function hide() {
-    overlay.classList.remove("show");
-    overlay.setAttribute('aria-hidden', 'true');
-
-    // clear popup-open flag
-    window.popupOpen = false;
-
-    // keep contact active after closing popup
-    if (sections && sections[4]) {
-      sections.forEach(s => s.classList.remove('active'));
-      sections[4].classList.add('active');
-    }
-  }
-
-  btn.addEventListener('click', hide);
-  close.addEventListener('click', hide);
-  overlay.addEventListener('click', (e) => { if (e.target === overlay) hide(); });
-  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') hide(); });
+  btn.onclick = () => {
+    popup.classList.remove("show");
+    popupOpen = false;
+  };
 })();
 
-/* ========================= DEBUG CONTACT FORM + SUBMIT HANDLER ======================= */
-
-
-
-/* ========================= CONTACT FORM (FIXED & PROD SAFE) ======================= */
-/* ========================= CONTACT FORM (FINAL FIX) ======================= */
+/* ========================= CONTACT FORM (FINAL WORKING) ======================= */
+/* ========================= CONTACT FORM (FINAL – WORKING) ======================= */
 (function () {
-const ENDPOINT = `${window.location.origin}/api/messages`;
+  const ENDPOINT = `${window.location.origin}/api/contact`;
   const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
   function initContact() {
@@ -198,7 +118,7 @@ const ENDPOINT = `${window.location.origin}/api/messages`;
 
         if (!res.ok) throw new Error("Server error");
 
-        showPopup("success", "successfully! Message Sent", "I Will Reply Soon 😎");
+        showPopup("success", "Message Sent!", "I will reply soon 😎");
         form.reset();
       } catch (err) {
         showPopup("warning", "Network Error", "Server not reachable.");
