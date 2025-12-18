@@ -1,7 +1,5 @@
 
 
-
-
 /* ========================= NAV / UI CODE (updated) ======================= */
 const navs = document.querySelectorAll('.nav-list li');
 const cube = document.querySelector('.box');

@@ -388,6 +388,17 @@ a:hover .tooltip {
 .tab-item h4 {
     font-size: 2.5rem;
 }
+.resume-item .ex {
+  width: 60px;
+  border-radius: 50%;
+  /* filter: invert(1); */
+}
+.resume-item .ex:hover {
+   transition: 0.3s;
+filter: drop-shadow(0 0 8px #3b82f6);
+  color: #3b82f6;
+}
+
 
 .resume-item h4:nth-child(1),
 .resume-item h4:nth-child(3) {
