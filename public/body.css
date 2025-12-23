@@ -51,30 +51,18 @@ body {
 p {
     font-size: 1.6rem;
 }
-.head{
-    position: absolute;
-    top: 2rem;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 4rem;
-    color: var(--bg-color);
-    font-weight: 500;
-    letter-spacing: .1rem;
-    background: var(--main-color);
-    padding: 0 1rem;
-    border-radius: 3rem;
-    border-radius: .5rem;
-    box-shadow: 0 0 1rem var(--main-color);
-    transition: .3s;
-}
+.Welcome {
+    color: var(--main-color);
+        font-size: 4rem;
 
-.head:hover {
+        -webkit-text-stroke: 0.2rem var(--main-color);
+}
+.Welcome:hover {
     color: var(--main-color);
     background: transparent;
-    text-shadow: 0 0 2rem var(--white-color);
     transition: .3s;
-    
-    
+                text-shadow: 0 0 1rem var(--white-color);
+
 }
 
 
@@ -146,6 +134,9 @@ a:hover .tooltip {
     transform: rotateY(0deg);
     transition:  2s;
 }
+strong{
+    color: var(--main-color);
+}
 
 
 
@@ -207,6 +198,7 @@ a:hover .tooltip {
 
 .home-info h3 {
     font-size: 3rem;
+    color: var(--white-color);
 }
 
 .desc {
@@ -233,6 +225,7 @@ a:hover .tooltip {
 .btn:hover {
     box-shadow: none;
 }
+
 
 .home-info .btn-sci .sci a {
     position: relative;
@@ -304,6 +297,41 @@ a:hover .tooltip {
     padding: 1.2rem 4rem;
 }
 
+
+.modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.8);
+  z-index: 999999;
+}
+
+
+.modal-content {
+  background: #1f2937;
+  color: #fff;
+  width: 100%;
+  max-width: 700px;
+  padding: 30px;
+  border-radius: 16px;
+
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.modal-content .close-btn {
+  position: absolute;
+  top: 1rem;
+  font-size: 2rem;
+  cursor: pointer;
+}
+.modal-content h2, h3{
+    color: var(--main-color);
+}
+
+/*  */
 .resume,
 .project {
     padding-top: 2rem;
@@ -382,6 +410,11 @@ a:hover .tooltip {
     background: var(--third-bg-color);
     border-radius: .8rem;
     padding: 2rem;
+
+}
+.tab-item:hover{
+           box-shadow: 0 0 1rem var(--main-color);
+  
 }
 
 
@@ -391,7 +424,6 @@ a:hover .tooltip {
 .resume-item .ex {
   width: 60px;
   border-radius: 50%;
-  /* filter: invert(1); */
 }
 .resume-item .ex:hover {
    transition: 0.3s;
@@ -424,6 +456,16 @@ filter: drop-shadow(0 0 8px #3b82f6);
     background: var(--main-color);
     border-radius: 50%;
 
+}
+.tool {
+    position: relative;
+    font-size: 1.5rem;
+    top: -100px;
+    margin-left: 155px;
+    color: var(--tab-list-color);
+}
+.tab-item:hover .tool {
+    color: var(--white-color);
 }
 
 .tab-item p {

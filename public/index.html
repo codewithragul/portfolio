@@ -45,9 +45,8 @@
     <div class="container">
         <div class="box">
             <section class="section home active">
-                <div class="head">Welcoming You</div>
                 <div class="home-info">
-                    <h3>Hello I'm</h3>
+                    <h3> <span class="Welcome"> Welcome to My Portfolio</span><br>Hello I'm</h3>
                     <h1>Ragul</h1>
                     <h3>Full stack developer</h3>
                     <p class="desc">I'm a Marn full-stack developer specializing in creating modern web applications
@@ -87,62 +86,80 @@
 
 
             <!--  -->
-            <section class="section about ">
+            <section class="section about" id="about">
                 <div class="img-warrap">
                     <div class="img-box about-img">
                         <img src="image/my pics.JPG" alt="">
                     </div>
                 </div>
+
                 <div class="about-info">
                     <h2 class="title">About</h2>
                     <h3>Full stack Developer</h3>
-                    <p class="desc">As a full-stack developer, I specialize in creating scalable, responsive, and
-                        optimized web applications. I love solving real-world problems through code, exploring new
-                        technologies, and building seamless digital experiences from front-end design to back-end
-                        architecture.
-                        tenetur praesentium?</p>
-                    <a href="#" class="btn">View More</a>
+                    <p class="desc">
+                        I am a MERN Full Stack Developer with hands-on experience in building modern,
+                        scalable, and responsive web applications. I have developed 8 real-world projects
+                        covering functionality, from intuitive front-end interfaces to secure and efficient
+                        back-end systems.
+                    </p>
+
+                    <button class="btn" id="viewMoreBtn" type="button">
+                        View More
+                    </button>
+                </div>
+                <div class="modal" id="aboutModal">
+                    <div class="modal-content">
+
+                        <span class="close-btn" id="closeModal">&times;</span>
+
+                        <h1 class="title">About Me</h1>
+                        <h2>MERN Full Stack Developer</h2>
+
+                        <p>
+                            I am a dedicated MERN Full Stack Developer with hands-on experience in building modern,
+                            scalable, and user-focused web applications. I have developed 8 real-world projects,
+                            including admin dashboards, e-commerce platforms, and personal portfolio websites.
+
+                            I enjoy transforming ideas into functional digital products by writing clean, efficient code
+                            and following best practices. I am continuously learning new technologies and improving my
+                            skills to deliver reliable and high-quality solutions.
+                        </p>
+
+                        <h3>Skills</h3>
+                        <ul>
+                            <li>HTML5</li>
+                            <li>CSS3</li>
+                            <li>JavaScript</li>
+                            <li>React.js</li>
+                            <li>Tailwind CSS</li>
+                            <li>Bootstrap</li>
+                            <li>Node.js</li>
+                            <li>Express.js</li>
+                            <li>MongoDB</li>
+                        </ul>
+
+                    </div>
                 </div>
             </section>
+
+
+
+
             <section class="section resume">
                 <h1 class="title">Resume</h1>
                 <div class="tab-box">
                     <div class="tab-list resume-list active">
-                        <h3>Certifications</h3>
+                        <h3>Skills</h3>
                     </div>
                     <div class="tab-list resume-list">
-                        <h3>Skills</h3>
+                        <h3>Tools</h3>
                     </div>
                     <div class="tab-list resume-list">
                         <h3>Education</h3>
                     </div>
                 </div>
                 <div class="tab-wrapper">
-                    <div class="tab-grid resume-box experience active">
-                        <div class="tab-item resume-item">
-
-                            <h4>2022 - Present</h4>
-                            <h4>Full stack developer</h4>
-                            <h4>google</h4>
-                            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Aliquam repudiandae magni
-                                quibusdam.</p>
-                        </div>
-                        <div class="tab-item resume-item">
-                            <h4>2022 - Present</h4>
-                            <h4>Full stack developer</h4>
-                            <h4>google</h4>
-                            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Aliquam repudiandae magni
-                                quibusdam.</p>
-                        </div>
-                        <div class="tab-item resume-item">
-                            <h4>2022 - Present</h4>
-                            <h4>Full stack developer</h4>
-                            <h4>google</h4>
-                            <p>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Aliquam repudiandae magni
-                                quibusdam.</p>
-                        </div>
-                    </div>
-                    <div class="tab-grid resume-box Skills">
+                    <div class="tab-grid resume-box Skills active">
                         <div class="tab-item resume-item">
                             <i class="fa-brands fa-html5"></i>
                             <p>HTML5</p>
@@ -168,11 +185,6 @@
                             <p>Bootstrap</p>
                         </div>
                         <div class="tab-item resume-item">
-                            <i class="fa-duotone fa-solid fa-cube"></i>
-                            <p>Boxicons</p>
-                        </div>
-
-                        <div class="tab-item resume-item">
                             <i class="fa-brands fa-node"></i>
                             <p>Node.js</p>
                         </div>
@@ -186,6 +198,52 @@
                         </div>
                     </div>
 
+
+                    <div class="tab-grid resume-box experience ">
+                        <div class="tab-item resume-item">
+                            <img src="./image/vs code.png" alt="VS Code" class="ex" />
+                            <p>VS Code</p>
+                            <p class="tool">I use VS Code for writing and debugging code efficiently with extensions and
+                                shortcuts.</p>
+
+                        </div>
+                        <div class="tab-item resume-item">
+                            <img src="./image/git.png" alt="Git" class="ex" />
+                            <p>Git</p>
+                            <p class="tool">I use Git for version control to track changes and manage my code locally.</p>
+
+                        </div>
+                        <div class="tab-item resume-item">
+                            <img src="./image/github.png" alt="Github" class="ex" />
+                            <p>Github</p>
+                            <p class="tool">I use GitHub to store my projects, push code, and collaborate using repositories.</p>
+
+                        </div>
+                        <div class="tab-item resume-item">
+                            <img src="./image/postman.png" alt="Postman" class="ex" />
+                            <p>Postman</p>
+                            <p class="tool">I use Postman to test APIs, send requests, and check responses during backend development.</p>
+
+                        </div>
+                        <div class="tab-item resume-item">
+                            <img src="./image/Thunder Client.jpg" alt="Thunder Client" class="ex" />
+                            <p>Thunder Client</p>
+                            <p class="tool">I use Thunder Client inside VS Code for quick API testing without switching tools.</p>
+
+                        </div>
+                        <div class="tab-item resume-item">
+                            <img src="./image/Render.jpeg" alt="Render" class="ex" />
+                            <p>Render</p>
+                            <p class="tool">I use Render to deploy my backend applications and make them accessible online.</p>
+
+                        </div>
+                        <div class="tab-item resume-item">
+                            <img src="./image/MongoDB Compass (GUI).png" alt="MongoDB Compass (GUI)" class="ex" />
+                            <p>MongoDB <br>Compass (GUI)</p>
+                            <p class="tool">I use MongoDB Compass to visually manage databases, collections, and perform CRUD operations.</p>
+
+                        </div>
+                    </div>
 
                     <div class="tab-grid resume-box education">
                         <div class="tab-item resume-item">
@@ -233,22 +291,23 @@
                                 <img src="image/Admin.png" alt="">
                             </div>
                             <div class="work-info">
-                                <h4>Frontend Project</h4>
-                                <p>"Built a fully responsive React.js admin dashboard with interactive charts, dynamic
+                                <h4> React Frontend Project</h4>
+                                <p>"Built a fully responsive React.js <strong>admin dashboard</strong> with interactive
+                                    charts, dynamic
                                     data components, and an intuitive UI. Focused on modular architecture, reusable
                                     components, and smooth user experience for scalable frontend performance."</p>
 
                                 <div class="tech-used">
-                                    <p>HTML5, CSS3, JavaScript,React.JS</p>
+                                    <p> <strong>HTML5, CSS3, JavaScript,React.JS</strong></p>
                                 </div>
 
                                 <div class="project-icon work-icon">
-                                    <a href="#">
+                                    <a href="https://admin-dashboard-3465.onrender.com" target="_blank">
                                         <i class="fa-solid fa-arrow-left"></i>
                                         <span class="tooltip">Preview</span>
                                     </a>
 
-                                    <a href="#">
+                                    <a href="https://github.com/codewithragul/Admin-Dashboard.git" target="_blank">
                                         <i class="fa-brands fa-github"></i>
                                         <span class="tooltip">Github Repository</span>
                                     </a>
@@ -262,21 +321,22 @@
                             </div>
                             <div class="work-info">
                                 <h4>Frontend Project</h4>
-                                <p>"Developed a stylish e-commerce interface featuring a music-themed landing and a
+                                <p>"Developed a stylish <strong> Music e-commerce</strong> interface featuring a
+                                    music-themed landing and a
                                     clean, user-friendly authentication page. Focused on responsive design, smooth UI
                                     flow, and an engaging visual experience to enhance user conversion.</p>
 
                                 <div class="tech-used">
-                                    <p>HTML5, CSS3, JavaScript</p>
+                                    <p> <strong>HTML5, CSS3, JavaScript</strong></p>
                                 </div>
 
                                 <div class="project-icon work-icon">
-                                    <a href="#">
+                                    <a href="https://music-ecom.onrender.com" target="_blank">
                                         <i class="fa-solid fa-arrow-left"></i>
                                         <span class="tooltip">Preview</span>
                                     </a>
 
-                                    <a href="#">
+                                    <a href="https://github.com/codewithragul/music-Ecom.git" target="_blank">
                                         <i class="fa-brands fa-github"></i>
                                         <span class="tooltip">Github Repository</span>
                                     </a>
@@ -289,21 +349,22 @@
                             </div>
                             <div class="work-info">
                                 <h4>Frontend Project</h4>
-                                <p>"Developed a dynamic React-based news platform with category filtering, API-driven
+                                <p>"Developed a dynamic React-based <strong>news website platform</strong> with category
+                                    filtering, API-driven
                                     articles, and a clean, responsive UI. Implemented reusable components and smooth
                                     navigation for an intuitive reading experience."</p>
 
                                 <div class="tech-used">
-                                    <p>HTML5, CSS3, JavaScript, React.JS</p>
+                                    <p> <strong>HTML5, CSS3, JavaScript, React.JS</strong></p>
                                 </div>
 
                                 <div class="project-icon work-icon">
-                                    <a href="#">
+                                    <a href="https://newsweb-rvv8.onrender.com" target="_blank">
                                         <i class="fa-solid fa-arrow-left"></i>
                                         <span class="tooltip">Preview</span>
                                     </a>
 
-                                    <a href="#">
+                                    <a href="https://github.com/codewithragul/newsweb.git" target="_blank">
                                         <i class="fa-brands fa-github"></i>
                                         <span class="tooltip">Github Repository</span>
                                     </a>
@@ -316,12 +377,13 @@
                             </div>
                             <div class="work-info">
                                 <h4>Frontend Project</h4>
-                                <p>"Created an immersive samurai-themed login interface with a cinematic background and
-                                    smooth UI design. Focused on clean form structure, responsive layout, and an
-                                    engaging visual experience for users."</p>
+                                <p>"Designed a visually engaging <strong>space-themed storage page</strong> with a
+                                    clean, modern UI and
+                                    smooth form interactions. Focused on responsive layout, intuitive navigation, and a
+                                    polished user authentication interface."</p>
 
                                 <div class="tech-used">
-                                    <p>HTML5, CSS3, JavaScript</p>
+                                    <p> <strong>HTML5, CSS3, JavaScript</strong></p>
                                 </div>
 
                                 <div class="project-icon work-icon">
@@ -330,7 +392,7 @@
                                         <span class="tooltip">Preview</span>
                                     </a>
 
-                                    <a href="#">
+                                    <a href="https://github.com/codewithragul/Space-Storage.git">
                                         <i class="fa-brands fa-github"></i>
                                         <span class="tooltip">Github Repository</span>
                                     </a>
@@ -343,12 +405,13 @@
                             </div>
                             <div class="work-info">
                                 <h4>Frontend Project</h4>
-                                <p>"Created a visually striking superhero-themed landing page with custom graphics, bold
+                                <p>"Created a visually striking <strong>spiderman-themed Movie page</strong> with custom
+                                    graphics, bold
                                     typography, and smooth UI layout. Designed to deliver an engaging user experience
                                     with responsive design and cinematic styling."</p>
 
                                 <div class="tech-used">
-                                    <p>HTML5, CSS3, JavaScript</p>
+                                    <p> <strong>HTML5, CSS3, JavaScript</strong></p>
                                 </div>
 
                                 <div class="project-icon work-icon">
@@ -370,21 +433,22 @@
                             </div>
                             <div class="work-info">
                                 <h4>Frontend Project</h4>
-                                <p>"Designed a visually engaging space-themed login page with a clean, modern UI and
-                                    smooth form interactions. Focused on responsive layout, intuitive navigation, and a
-                                    polished user authentication interface."</p>
+                                <p>"Created an immersive <strong> samurai-themed login interface</strong> with a
+                                    cinematic background and
+                                    smooth UI design. Focused on clean form structure, responsive layout, and an
+                                    engaging visual experience for users."</p>
 
                                 <div class="tech-used">
-                                    <p>HTML5, CSS3, JavaScript</p>
+                                    <p><strong>HTML5, CSS3, JavaScript</strong></p>
                                 </div>
 
                                 <div class="project-icon work-icon">
-                                    <a href="#">
+                                    <a href="https://anime-login-page-26j4.onrender.com" target="_blank">
                                         <i class="fa-solid fa-arrow-left"></i>
                                         <span class="tooltip">Preview</span>
                                     </a>
 
-                                    <a href="#">
+                                    <a href="https://github.com/codewithragul/anime-login-page.git" target="_blank">
                                         <i class="fa-brands fa-github"></i>
                                         <span class="tooltip">Github Repository</span>
                                     </a>
@@ -397,22 +461,23 @@
                             </div>
                             <div class="work-info">
                                 <h4>Frontend Project</h4>
-                                <p>"Built a fully responsive e-commerce Like (Amazon Clone) website featuring product
+                                <p>"Built a fully responsive <strong> e-commerce Like (Amazon Clone) website </strong>
+                                    featuring product
                                     search, filtering,
                                     wishlist, and cart management. Designed an intuitive user interface with smooth
                                     navigation and a clean, modern shopping experience."</p>
 
                                 <div class="tech-used">
-                                    <p>HTML5, CSS3, JavaScript</p>
+                                    <p><strong>HTML5, CSS3, JavaScript</strong></p>
                                 </div>
 
                                 <div class="project-icon work-icon">
-                                    <a href="#">
+                                    <a href="https://our-store-q7qp.onrender.com" target="_blank">
                                         <i class="fa-solid fa-arrow-left"></i>
                                         <span class="tooltip">Preview</span>
                                     </a>
 
-                                    <a href="#">
+                                    <a href="https://github.com/codewithragul/Our-Store.git" target="_blank">
                                         <i class="fa-brands fa-github"></i>
                                         <span class="tooltip">Github Repository</span>
                                     </a>
@@ -425,12 +490,13 @@
                             </div>
                             <div class="work-info">
                                 <h4>Frontend Project</h4>
-                                <p>"Designed a modern personal portfolio with a clean UI, smooth animations, and
+                                <p>"Designed a modern <strong>personal portfolio</strong> with a clean UI, smooth
+                                    animations, and
                                     responsive layout to showcase skills and projects. Built with a focus on clarity,
                                     branding, and an engaging developer introduction section."</p>
 
                                 <div class="tech-used">
-                                    <p>HTML5, CSS3, JavaScript</p>
+                                    <p><strong>HTML5, CSS3, JavaScript, MongoDB</strong></p>
                                 </div>
 
                                 <div class="project-icon work-icon">
@@ -548,6 +614,7 @@
                 </div>
 
             </section>
+
 
             <script src="body.js"></script>
 </body>
