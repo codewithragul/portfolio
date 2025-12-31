@@ -11,7 +11,16 @@ const messageSchema = new mongoose.Schema(
       type: String,
       required: true
     },
-    phone: String,
+     phone: {
+      type: Number,
+      required: true,
+      validate: {
+        validator: function (v) {
+          return /^\d{10}$/.test(v.toString());
+        },
+        message: "Phone number must be exactly 10 digits",
+      },
+    }, 
     subject: String,
     message: {
       type: String,
